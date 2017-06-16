@@ -20,12 +20,13 @@ import "github.com/gtong/gojs/syntax"
 %token ASSIGNMENT
 
 %token END
-%token IF
-%token ELSE
 %token LP
 %token RP
 %token LB
 %token RB
+%token IF
+%token ELSE
+%token WHILE
 
 %right ASSIGNMENT
 %left UNARY_OP
@@ -58,6 +59,10 @@ statement: expr END
 | IF LP expr RP LB statements RB ELSE LB statements RB
 {
   $$ = createIfElseNode($3, $6, $10)
+}
+| WHILE LP expr RP LB statements RB
+{
+  $$ = createWhileNode($3, $6)
 }
 
 expr: BOOLEAN

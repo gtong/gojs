@@ -1,10 +1,11 @@
-/;/    { return END }
-/if/   { return IF }
-/else/ { return ELSE }
-/\(/   { return LP }
-/\)/   { return RP }
-/\{/   { return LB }
-/\}/   { return RB }
+/;/     { return END }
+/\(/    { return LP }
+/\)/    { return RP }
+/\{/    { return LB }
+/\}/    { return RB }
+/if/    { return IF }
+/else/  { return ELSE }
+/while/ { return WHILE }
 
 /NaN/                    { lval.s = yylex.Text(); return NUMBER }
 /true/                   { lval.s = yylex.Text(); return BOOLEAN }

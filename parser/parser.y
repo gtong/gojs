@@ -27,6 +27,7 @@ import "github.com/gtong/gojs/syntax"
 %token IF
 %token ELSE
 %token WHILE
+%token FOR
 %token BREAK
 %token CONTINUE
 
@@ -65,6 +66,10 @@ statement: expr END
 | WHILE LP expr RP LB statements RB
 {
   $$ = createWhileNode($3, $6)
+}
+| FOR LP expr END expr END expr RP LB statements RB
+{
+  $$ = createForNode($3, $5, $7, $10)
 }
 
 expr: BOOLEAN

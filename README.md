@@ -13,7 +13,7 @@ List of features to implement:
 * ~~Variables~~
 * ~~Conditionals (just if)
 * ~~Comparisons~~
-* Looping statements (while, for)
+* ~~Looping statements (while, for)~~
 * Functions
 * Closures
 * Javascript objects (and object notation)

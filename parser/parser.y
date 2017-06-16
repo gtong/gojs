@@ -27,6 +27,8 @@ import "github.com/gtong/gojs/syntax"
 %token IF
 %token ELSE
 %token WHILE
+%token BREAK
+%token CONTINUE
 
 %right ASSIGNMENT
 %left UNARY_OP
@@ -79,6 +81,14 @@ expr: BOOLEAN
 | IDENTIFIER
 {
   $$ = createIdentifierNode($1)
+}
+| BREAK
+{
+  $$ = createBreakNode()
+}
+| CONTINUE
+{
+  $$ = createContinueNode()
 }
 | expr BIN_OP_2 expr
 {

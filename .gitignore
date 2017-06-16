@@ -1,0 +1,8 @@
+# IDEA files
+.idea
+*.iml
+
+# Generated files
+*.gen.go
+/y.output
+/gojs

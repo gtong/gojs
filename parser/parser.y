@@ -30,8 +30,13 @@ import "github.com/gtong/gojs/syntax"
 %token FOR
 %token BREAK
 %token CONTINUE
+%token FUNCTION
+%token RETURN
 
 %right ASSIGNMENT
+%right RETURN
+%left LP
+%left RP
 %left UNARY_OP
 %left BIN_OP_1
 %left BIN_OP_2
@@ -110,5 +115,17 @@ expr: BOOLEAN
 | expr UNARY_OP
 {
   $$ = createUnaryOpNode($2, $1)
+}
+| FUNCTION LP RP LB statements RB
+{
+  $$ = createFunctionNode($5)
+}
+| RETURN expr
+{
+  $$ = createReturnNode($2)
+}
+| expr LP RP
+{
+  $$ = createCallNode($1)
 }
 %%

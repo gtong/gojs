@@ -54,4 +54,6 @@ type Value interface {
 	// Returns >0 if this value is > passed-in value
 	// Returns <0 if this value is < passed-in value
 	Compare(*Context, Value, bool) (int, bool, error)
+
+	Call(*Context, []Value) (Value, error)
 }

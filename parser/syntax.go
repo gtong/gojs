@@ -115,3 +115,25 @@ func appendStatement(statements *yySymType, statement yySymType) yySymType {
 	node.Append(statement.node)
 	return yySymType{node: node}
 }
+
+func createFunctionNode(statements yySymType) yySymType {
+	statementsNode := statements.node.(*syntax.StatementsNode)
+	node := syntax.FunctionNode{
+		Statements: statementsNode,
+	}
+	return yySymType{node: node}
+}
+
+func createReturnNode(expr yySymType) yySymType {
+	node := syntax.ReturnNode{
+		Expression: expr.node,
+	}
+	return yySymType{node: node}
+}
+
+func createCallNode(expr yySymType) yySymType {
+	node := syntax.CallNode{
+		Expression: expr.node,
+	}
+	return yySymType{node: node}
+}

@@ -9,6 +9,8 @@
 /continue/ { return CONTINUE }
 /while/    { return WHILE }
 /for/      { return FOR }
+/function/ { return FUNCTION }
+/return/   { return RETURN }
 
 /NaN/                    { lval.s = yylex.Text(); return NUMBER }
 /true/                   { lval.s = yylex.Text(); return BOOLEAN }

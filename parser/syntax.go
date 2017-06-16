@@ -2,6 +2,7 @@ package parser
 
 import (
 	"fmt"
+
 	"github.com/gtong/gojs/syntax"
 )
 
@@ -73,9 +74,19 @@ func createIfElseNode(expr yySymType, ifStatements yySymType, elseStatements yyS
 func createWhileNode(expr yySymType, statements yySymType) yySymType {
 	statementsNode := statements.node.(*syntax.StatementsNode)
 	node := syntax.WhileNode{
-		Expression:     expr.node,
-		Statements:   statementsNode,
+		Expression: expr.node,
+		Statements: statementsNode,
 	}
+	return yySymType{node: node}
+}
+
+func createBreakNode() yySymType {
+	node := syntax.BreakNode{}
+	return yySymType{node: node}
+}
+
+func createContinueNode() yySymType {
+	node := syntax.ContinueNode{}
 	return yySymType{node: node}
 }
 

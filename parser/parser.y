@@ -14,6 +14,7 @@ import "github.com/gtong/gojs/syntax"
 %token STRING
 %token IDENTIFIER
 
+%token UNARY_OP
 %token BIN_OP_1
 %token BIN_OP_2
 %token ASSIGNMENT
@@ -27,6 +28,7 @@ import "github.com/gtong/gojs/syntax"
 %token RB
 
 %right ASSIGNMENT
+%left UNARY_OP
 %left BIN_OP_1
 %left BIN_OP_2
 
@@ -84,5 +86,9 @@ expr: BOOLEAN
 | expr ASSIGNMENT expr
 {
   $$ = createBinaryOpNode($2, $1, $3)
+}
+| expr UNARY_OP
+{
+  $$ = createUnaryOpNode($2, $1)
 }
 %%

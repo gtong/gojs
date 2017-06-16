@@ -1,19 +1,24 @@
-/;/                      { return END }
-/if/                     { return IF }
-/else/                   { return ELSE }
-/\(/                     { return LP }
-/\)/                     { return RP }
-/\{/                     { return LB }
-/\}/                     { return RB }
+/;/    { return END }
+/if/   { return IF }
+/else/ { return ELSE }
+/\(/   { return LP }
+/\)/   { return RP }
+/\{/   { return LB }
+/\}/   { return RB }
+
 /NaN/                    { lval.s = yylex.Text(); return NUMBER }
 /true/                   { lval.s = yylex.Text(); return BOOLEAN }
 /false/                  { lval.s = yylex.Text(); return BOOLEAN }
-/[\!\=]==?/              { lval.s = yylex.Text(); return BIN_OP_1 }
-/[><]=?/                 { lval.s = yylex.Text(); return BIN_OP_1 }
-/[\+\-]/                 { lval.s = yylex.Text(); return BIN_OP_2 }
-/=/                      { lval.s = yylex.Text(); return ASSIGNMENT }
 /'[^']*'/                { lval.s = yylex.Text(); return STRING }
 /[0-9]+/                 { lval.s = yylex.Text(); return NUMBER }
 /[a-zA-Z_][a-zA-Z0-9_]*/ { lval.s = yylex.Text(); return IDENTIFIER }
+
+/\+\+/      { lval.s = yylex.Text(); return UNARY_OP }
+/\-\-/      { lval.s = yylex.Text(); return UNARY_OP }
+/[\!\=]==?/ { lval.s = yylex.Text(); return BIN_OP_1 }
+/[><]=?/    { lval.s = yylex.Text(); return BIN_OP_1 }
+/[\+\-]/    { lval.s = yylex.Text(); return BIN_OP_2 }
+/=/         { lval.s = yylex.Text(); return ASSIGNMENT }
+
 //
 package parser

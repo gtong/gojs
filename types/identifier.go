@@ -71,6 +71,22 @@ func (a IdentifierValue) Assign(ctx *Context, b Value) (Value, error) {
 	return ab, nil
 }
 
+func (a IdentifierValue) Increment(ctx *Context, value int) (Value, error) {
+	na, err := a.ToNumberValue(ctx)
+	if err != nil {
+		return nil, err
+	}
+	incVal, err := na.Add(ctx, NumberValue{Value: int64(value)})
+	if err != nil {
+		return nil, err
+	}
+	_, err = a.Assign(ctx, incVal)
+	if err != nil {
+		return nil, err
+	}
+	return na, nil
+}
+
 func (a IdentifierValue) Compare(ctx *Context, b Value, strict bool) (int, bool, error) {
 	aa, err := a.ToActualValue(ctx)
 	if err != nil {

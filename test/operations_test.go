@@ -6,7 +6,28 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func TestOperators(t *testing.T) {
+func TestUnaryOperators(t *testing.T) {
+	Convey("increment", t, func() {
+		assertEval("x = 0; x++;", intVal(0))
+		assertEval("x = 0; x++; x;", intVal(1))
+
+		assertEval("x = true; x++;", intVal(1))
+		assertEval("x = true; x++; x;", intVal(2))
+
+		assertEval("x = 'a'; x++;", nanVal())
+
+		assertError("1++;", "Invalid left-hand side expression")
+		assertError("'a'++;", "Invalid left-hand side expression")
+		assertError("true++;", "Invalid left-hand side expression")
+	})
+
+	Convey("decrement", t, func() {
+		assertEval("x = 3; x--;", intVal(3))
+		assertEval("x = 3; x--; x;", intVal(2))
+	})
+}
+
+func TestBinaryOperators(t *testing.T) {
 	Convey("addition", t, func() {
 		// Int tests
 		assertEval("1 + 1;", intVal(2))
@@ -67,6 +88,10 @@ func TestOperators(t *testing.T) {
 		assertEval("x = 1; y = x; x = 2; y + 0;", intVal(1))
 
 		assertEval("x = true;", boolVal(true))
+
+		assertError("1 = 1;", "Invalid left-hand side in assignment")
+		assertError("'a' = 'a';", "Invalid left-hand side in assignment")
+		assertError("true = true;", "Invalid left-hand side in assignment")
 	})
 
 	Convey("equality", t, func() {

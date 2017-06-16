@@ -7,9 +7,13 @@ import (
 )
 
 const (
-	ADD_OP                   = "+"
-	SUBTRACT_OP              = "-"
-	ASSIGNMENT_OP            = "="
+	ADD_OP        = "+"
+	SUBTRACT_OP   = "-"
+	ASSIGNMENT_OP = "="
+
+	INCREMENT_OP = "++"
+	DECREMENT_OP = "--"
+
 	GREATER_THAN_OP          = ">"
 	LESS_THAN_OP             = "<"
 	GREATER_THAN_OR_EQUAL_OP = ">="
@@ -19,6 +23,26 @@ const (
 	EQUALITY_OP_STRICT       = "==="
 	INEQUALITY_OP_STRICT     = "!=="
 )
+
+type UnaryOpNode struct {
+	Left     Node
+	Operator string
+}
+
+func (n UnaryOpNode) Eval(ctx *types.Context) (types.Value, error) {
+	lv, err := n.Left.Eval(ctx)
+	if err != nil {
+		return nil, err
+	}
+	switch n.Operator {
+	case INCREMENT_OP:
+		return lv.Increment(ctx, 1)
+	case DECREMENT_OP:
+		return lv.Increment(ctx, -1)
+	default:
+		return nil, fmt.Errorf("operator %s not recognized", n.Operator)
+	}
+}
 
 type BinaryOpNode struct {
 	Left     Node

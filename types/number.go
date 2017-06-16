@@ -108,3 +108,7 @@ func (a NumberValue) Compare(ctx *Context, b Value, strict bool) (int, bool, err
 	}
 	return cmp, false, nil
 }
+
+func (a NumberValue) Call(ctx *Context, args []Value) (Value, error) {
+	return nil, errors.New("TypeError: is not a function")
+}

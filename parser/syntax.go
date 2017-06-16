@@ -80,6 +80,17 @@ func createWhileNode(expr yySymType, statements yySymType) yySymType {
 	return yySymType{node: node}
 }
 
+func createForNode(initExpr yySymType, testExpr yySymType, incrExpr yySymType, statements yySymType) yySymType {
+	statementsNode := statements.node.(*syntax.StatementsNode)
+	node := syntax.ForNode{
+		InitExpr:   initExpr.node,
+		TestExpr:   testExpr.node,
+		IncrExpr:   incrExpr.node,
+		Statements: statementsNode,
+	}
+	return yySymType{node: node}
+}
+
 func createBreakNode() yySymType {
 	node := syntax.BreakNode{}
 	return yySymType{node: node}

@@ -5,9 +5,10 @@
 /\}/       { return RB }
 /if/       { return IF }
 /else/     { return ELSE }
-/while/    { return WHILE }
 /break/    { return BREAK }
 /continue/ { return CONTINUE }
+/while/    { return WHILE }
+/for/      { return FOR }
 
 /NaN/                    { lval.s = yylex.Text(); return NUMBER }
 /true/                   { lval.s = yylex.Text(); return BOOLEAN }

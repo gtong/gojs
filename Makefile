@@ -15,12 +15,12 @@ fix:
 	gofmt -w -l .
 	goimports -w -l .
 
-test:
+test: gen
 	go test ./...
 
 precommit: fix test
 
-build: clean gen test
+build: clean test
 	go build
 
 all: clean setup build

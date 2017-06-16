@@ -2,12 +2,13 @@ package syntax
 
 import "github.com/gtong/gojs/types"
 
-type ConditionalNode struct {
+type IfNode struct {
 	Expression Node
-	Statements *StatementsNode
+	IfStatements *StatementsNode
+	ElseStatements *StatementsNode
 }
 
-func (n ConditionalNode) Eval(ctx *types.Context) (types.Value, error) {
+func (n IfNode) Eval(ctx *types.Context) (types.Value, error) {
 	expr, err := n.Expression.Eval(ctx)
 	if err != nil {
 		return nil, err
@@ -17,7 +18,9 @@ func (n ConditionalNode) Eval(ctx *types.Context) (types.Value, error) {
 		return nil, err
 	}
 	if exprBool.Value == true {
-		return n.Statements.Eval(ctx)
+		return n.IfStatements.Eval(ctx)
+	} else if n.ElseStatements != nil {
+		return n.ElseStatements.Eval(ctx)
 	}
 	return nil, nil
 }

@@ -44,11 +44,22 @@ func createBinaryOpNode(operator yySymType, left yySymType, right yySymType) yyS
 	return yySymType{node: node}
 }
 
-func createIfNode(expr yySymType, statements yySymType) yySymType {
-	statementsNode := statements.node.(*syntax.StatementsNode)
-	node := syntax.ConditionalNode{
+func createIfNode(expr yySymType, ifStatements yySymType) yySymType {
+	ifStatementsNode := ifStatements.node.(*syntax.StatementsNode)
+	node := syntax.IfNode{
 		Expression: expr.node,
-		Statements: statementsNode,
+		IfStatements: ifStatementsNode,
+	}
+	return yySymType{node: node}
+}
+
+func createIfElseNode(expr yySymType, ifStatements yySymType, elseStatements yySymType) yySymType {
+	ifStatementsNode := ifStatements.node.(*syntax.StatementsNode)
+	elseStatementsNode := elseStatements.node.(*syntax.StatementsNode)
+	node := syntax.IfNode{
+		Expression: expr.node,
+		IfStatements: ifStatementsNode,
+		ElseStatements: elseStatementsNode,
 	}
 	return yySymType{node: node}
 }

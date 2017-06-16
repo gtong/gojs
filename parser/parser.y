@@ -13,11 +13,14 @@ import "github.com/gtong/gojs/syntax"
 %token NUMBER
 %token STRING
 %token IDENTIFIER
+
 %token BIN_OP_1
 %token BIN_OP_2
 %token ASSIGNMENT
+
 %token END
 %token IF
+%token ELSE
 %token LP
 %token RP
 %token LB
@@ -49,6 +52,10 @@ statement: expr END
 | IF LP expr RP LB statements RB
 {
   $$ = createIfNode($3, $6)
+}
+| IF LP expr RP LB statements RB ELSE LB statements RB
+{
+  $$ = createIfElseNode($3, $6, $10)
 }
 
 expr: BOOLEAN

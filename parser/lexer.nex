@@ -1,5 +1,6 @@
 /;/                      { return END }
 /if/                     { return IF }
+/else/                   { return ELSE }
 /\(/                     { return LP }
 /\)/                     { return RP }
 /\{/                     { return LB }

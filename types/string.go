@@ -59,6 +59,10 @@ func (a StringValue) Assign(ctx *Context, value Value) (Value, error) {
 	return nil, errors.New("ReferenceError: Invalid left-hand side in assignment")
 }
 
+func (a StringValue) Increment(ctx *Context, value int) (Value, error) {
+	return nil, errors.New("ReferenceError: Invalid left-hand side expression in postfix operation")
+}
+
 func (a StringValue) Compare(ctx *Context, b Value, strict bool) (int, bool, error) {
 	ab, err := b.ToActualValue(ctx)
 	if err != nil {

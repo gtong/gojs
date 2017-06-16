@@ -3,8 +3,8 @@ package syntax
 import "github.com/gtong/gojs/types"
 
 type IfNode struct {
-	Expression Node
-	IfStatements *StatementsNode
+	Expression     Node
+	IfStatements   *StatementsNode
 	ElseStatements *StatementsNode
 }
 

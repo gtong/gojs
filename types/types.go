@@ -47,6 +47,7 @@ type Value interface {
 
 	// Rules for assignment:
 	Assign(*Context, Value) (Value, error)
+	Increment(*Context, int) (Value, error)
 
 	// Rules for Compare:
 	// Returns 0 if they are equal

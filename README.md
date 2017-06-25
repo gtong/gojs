@@ -11,7 +11,7 @@ List of features to implement:
 * ~~Type System~~
 * ~~Operators~~ (just +, -)
 * ~~Variables~~
-* ~~Conditionals (just if)
+* ~~Conditionals~~ (just if)
 * ~~Comparisons~~
 * ~~Looping statements (while, for)~~
 * Functions

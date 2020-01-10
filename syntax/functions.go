@@ -13,6 +13,8 @@ func (e *ErrorReturn) Error() string {
 }
 
 type ReturnNode struct {
+	Line       int
+	Column     int
 	Expression Node
 }
 
@@ -29,15 +31,21 @@ func (n ReturnNode) Eval(ctx *types.Context) (types.Value, error) {
 }
 
 type FunctionNode struct {
+	Line       int
+	Column     int
+	Parameters []string
 	Statements *StatementsNode
 }
 
 func (n FunctionNode) Eval(ctx *types.Context) (types.Value, error) {
-	return types.FunctionValue{Statements: n.Statements}, nil
+	return types.NewFunctionValue(ctx, n.Parameters, n.Statements), nil
 }
 
 type CallNode struct {
+	Line       int
+	Column     int
 	Expression Node
+	Arguments  []Node
 }
 
 func (n CallNode) Eval(ctx *types.Context) (types.Value, error) {
@@ -45,7 +53,15 @@ func (n CallNode) Eval(ctx *types.Context) (types.Value, error) {
 	if err != nil {
 		return nil, err
 	}
-	if _, err := val.Call(ctx, nil); err != nil {
+	var args []types.Value
+	for _, arg := range n.Arguments {
+		arg, err := arg.Eval(ctx)
+		if err != nil {
+			return nil, err
+		}
+		args = append(args, arg)
+	}
+	if _, err := val.Call(ctx, args); err != nil {
 		if errReturn, ok := err.(*ErrorReturn); ok {
 			return errReturn.Value, nil
 		}

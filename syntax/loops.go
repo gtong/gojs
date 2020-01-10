@@ -9,13 +9,19 @@ import (
 var ErrBreak = errors.New("break")
 var ErrContinue = errors.New("continue")
 
-type BreakNode struct{}
+type BreakNode struct {
+	Line   int
+	Column int
+}
 
 func (n BreakNode) Eval(ctx *types.Context) (types.Value, error) {
 	return nil, ErrBreak
 }
 
-type ContinueNode struct{}
+type ContinueNode struct {
+	Line   int
+	Column int
+}
 
 func (n ContinueNode) Eval(ctx *types.Context) (types.Value, error) {
 	return nil, ErrContinue

@@ -25,6 +25,8 @@ const (
 )
 
 type UnaryOpNode struct {
+	Line     int
+	Column   int
 	Left     Node
 	Operator string
 }
@@ -45,6 +47,8 @@ func (n UnaryOpNode) Eval(ctx *types.Context) (types.Value, error) {
 }
 
 type BinaryOpNode struct {
+	Line     int
+	Column   int
 	Left     Node
 	Right    Node
 	Operator string

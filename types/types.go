@@ -5,6 +5,7 @@ import (
 )
 
 type Context struct {
+	Parent    *Context
 	Variables map[string]Value
 }
 
@@ -23,9 +24,22 @@ func (c *Context) Set(s string, v Value) Value {
 func (c Context) Get(s string) (Value, error) {
 	v, ok := c.Variables[s]
 	if !ok {
+		if c.Parent != nil {
+			return c.Parent.Get(s)
+		}
 		return nil, errors.New("ReferenceError: " + s + " is not defined")
 	}
 	return v, nil
+}
+
+func (c *Context) FindContext(s string) *Context {
+	if _, ok := c.Variables[s]; ok {
+		return c
+	}
+	if c.Parent != nil {
+		return c.Parent.FindContext(s)
+	}
+	return nil
 }
 
 type Value interface {

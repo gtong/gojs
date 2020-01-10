@@ -80,7 +80,8 @@ func (a IdentifierValue) Increment(ctx *Context, value int) (Value, error) {
 	if err != nil {
 		return nil, err
 	}
-	_, err = a.Assign(ctx, incVal)
+	// You should always be able to find a context as ToNumberValue would have failed otherwise
+	_, err = a.Assign(ctx.FindContext(a.Value), incVal)
 	if err != nil {
 		return nil, err
 	}

@@ -3,6 +3,8 @@ package syntax
 import "github.com/gtong/gojs/types"
 
 type StatementsNode struct {
+	Line       int
+	Column     int
 	Statements []Node
 }
 

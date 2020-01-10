@@ -6,8 +6,16 @@ import (
 	"github.com/gtong/gojs/types"
 )
 
+type NullNode struct{}
+
+func (i NullNode) Eval(ctx *types.Context) (types.Value, error) {
+	return types.Null, nil
+}
+
 type IdentifierNode struct {
-	Value string
+	Line   int
+	Column int
+	Value  string
 }
 
 func (i IdentifierNode) Eval(ctx *types.Context) (types.Value, error) {
@@ -15,7 +23,9 @@ func (i IdentifierNode) Eval(ctx *types.Context) (types.Value, error) {
 }
 
 type BooleanNode struct {
-	Value string
+	Line   int
+	Column int
+	Value  string
 }
 
 func (t BooleanNode) Eval(ctx *types.Context) (types.Value, error) {
@@ -26,7 +36,9 @@ func (t BooleanNode) Eval(ctx *types.Context) (types.Value, error) {
 }
 
 type NumberNode struct {
-	Value string
+	Line   int
+	Column int
+	Value  string
 }
 
 func (t NumberNode) Eval(ctx *types.Context) (types.Value, error) {
@@ -41,7 +53,9 @@ func (t NumberNode) Eval(ctx *types.Context) (types.Value, error) {
 }
 
 type StringNode struct {
-	Value string
+	Line   int
+	Column int
+	Value  string
 }
 
 func (t StringNode) Eval(ctx *types.Context) (types.Value, error) {

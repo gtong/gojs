@@ -34,6 +34,10 @@ func nanVal() types.NumberValue {
 	return types.NaN
 }
 
+func nullVal() types.NullValue {
+	return types.Null
+}
+
 func strVal(s string) types.StringValue {
 	return types.StringValue{Value: s}
 }

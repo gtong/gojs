@@ -7,6 +7,10 @@ import (
 )
 
 func TestConstants(t *testing.T) {
+	Convey("null", t, func() {
+		assertEval("null;", nullVal())
+	})
+
 	Convey("numbers", t, func() {
 		assertEval("1;", intVal(1))
 	})

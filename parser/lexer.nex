@@ -1,30 +1,32 @@
-/;/        { return END }
-/\(/       { return LP }
-/\)/       { return RP }
-/\{/       { return LB }
-/\}/       { return RB }
-/if/       { return IF }
-/else/     { return ELSE }
-/break/    { return BREAK }
-/continue/ { return CONTINUE }
-/while/    { return WHILE }
-/for/      { return FOR }
-/function/ { return FUNCTION }
-/return/   { return RETURN }
+/;/        { lval.l = yylex.Line(); lval.c = yylex.Column(); return END }
+/\(/       { lval.l = yylex.Line(); lval.c = yylex.Column(); return LP }
+/\)/       { lval.l = yylex.Line(); lval.c = yylex.Column(); return RP }
+/\{/       { lval.l = yylex.Line(); lval.c = yylex.Column(); return LB }
+/\}/       { lval.l = yylex.Line(); lval.c = yylex.Column(); return RB }
+/,/        { lval.l = yylex.Line(); lval.c = yylex.Column(); return COMMA }
+/if/       { lval.l = yylex.Line(); lval.c = yylex.Column(); return IF }
+/else/     { lval.l = yylex.Line(); lval.c = yylex.Column(); return ELSE }
+/break/    { lval.l = yylex.Line(); lval.c = yylex.Column(); return BREAK }
+/continue/ { lval.l = yylex.Line(); lval.c = yylex.Column(); return CONTINUE }
+/while/    { lval.l = yylex.Line(); lval.c = yylex.Column(); return WHILE }
+/for/      { lval.l = yylex.Line(); lval.c = yylex.Column(); return FOR }
+/function/ { lval.l = yylex.Line(); lval.c = yylex.Column(); return FUNCTION }
+/return/   { lval.l = yylex.Line(); lval.c = yylex.Column(); return RETURN }
 
-/NaN/                    { lval.s = yylex.Text(); return NUMBER }
-/true/                   { lval.s = yylex.Text(); return BOOLEAN }
-/false/                  { lval.s = yylex.Text(); return BOOLEAN }
-/'[^']*'/                { lval.s = yylex.Text(); return STRING }
-/[0-9]+/                 { lval.s = yylex.Text(); return NUMBER }
-/[a-zA-Z_][a-zA-Z0-9_]*/ { lval.s = yylex.Text(); return IDENTIFIER }
+/null/                   { lval.l = yylex.Line(); lval.c = yylex.Column(); lval.s = yylex.Text(); return NULL }
+/NaN/                    { lval.l = yylex.Line(); lval.c = yylex.Column(); lval.s = yylex.Text(); return NUMBER }
+/true/                   { lval.l = yylex.Line(); lval.c = yylex.Column(); lval.s = yylex.Text(); return BOOLEAN }
+/false/                  { lval.l = yylex.Line(); lval.c = yylex.Column(); lval.s = yylex.Text(); return BOOLEAN }
+/'[^']*'/                { lval.l = yylex.Line(); lval.c = yylex.Column(); lval.s = yylex.Text(); return STRING }
+/[0-9]+/                 { lval.l = yylex.Line(); lval.c = yylex.Column(); lval.s = yylex.Text(); return NUMBER }
+/[a-zA-Z_][a-zA-Z0-9_]*/ { lval.l = yylex.Line(); lval.c = yylex.Column(); lval.s = yylex.Text(); return IDENTIFIER }
 
-/\+\+/      { lval.s = yylex.Text(); return UNARY_OP }
-/\-\-/      { lval.s = yylex.Text(); return UNARY_OP }
-/[\!\=]==?/ { lval.s = yylex.Text(); return BIN_OP_1 }
-/[><]=?/    { lval.s = yylex.Text(); return BIN_OP_1 }
-/[\+\-]/    { lval.s = yylex.Text(); return BIN_OP_2 }
-/=/         { lval.s = yylex.Text(); return ASSIGNMENT }
+/\+\+/      { lval.l = yylex.Line(); lval.c = yylex.Column(); lval.s = yylex.Text(); return UNARY_OP }
+/\-\-/      { lval.l = yylex.Line(); lval.c = yylex.Column(); lval.s = yylex.Text(); return UNARY_OP }
+/[\!\=]==?/ { lval.l = yylex.Line(); lval.c = yylex.Column(); lval.s = yylex.Text(); return BIN_OP_1 }
+/[><]=?/    { lval.l = yylex.Line(); lval.c = yylex.Column(); lval.s = yylex.Text(); return BIN_OP_1 }
+/[\+\-]/    { lval.l = yylex.Line(); lval.c = yylex.Column(); lval.s = yylex.Text(); return BIN_OP_2 }
+/=/         { lval.l = yylex.Line(); lval.c = yylex.Column(); lval.s = yylex.Text(); return ASSIGNMENT }
 
 //
 package parser

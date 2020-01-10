@@ -11,7 +11,13 @@ type Evaluable interface {
 }
 
 type FunctionValue struct {
-	Statements Evaluable
+	context    *Context
+	parameters []string
+	statements Evaluable
+}
+
+func NewFunctionValue(ctx *Context, parameters []string, statements Evaluable) *FunctionValue {
+	return &FunctionValue{context: ctx, parameters: parameters, statements: statements}
 }
 
 func (a FunctionValue) ToString(ctx *Context) (string, error) {
@@ -79,6 +85,23 @@ func (a FunctionValue) Compare(ctx *Context, b Value, strict bool) (int, bool, e
 }
 
 func (a FunctionValue) Call(ctx *Context, args []Value) (Value, error) {
-	newContext := &Context{}
-	return a.Statements.Eval(newContext)
+	values := make([]Value, len(a.parameters))
+	for i, arg := range args {
+		if i >= len(a.parameters) {
+			break
+		}
+		value, err := arg.ToActualValue(ctx)
+		if err != nil {
+			return nil, err
+		}
+		values[i] = value
+	}
+	newContext := &Context{Parent: a.context}
+	for i, param := range a.parameters {
+		if values[i] == nil {
+			values[i] = Null
+		}
+		newContext.Set(param, values[i])
+	}
+	return a.statements.Eval(newContext)
 }

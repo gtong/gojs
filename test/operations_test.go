@@ -33,9 +33,15 @@ func TestBinaryOperators(t *testing.T) {
 		assertEval("1 + 1;", intVal(2))
 		assertEval("1 + 2 + 3;", intVal(6))
 		assertEval("1 + '2';", strVal("12"))
+		assertEval("1 + null;", intVal(1))
 		assertEval("1 + NaN;", nanVal())
 		assertEval("1 + true;", intVal(2))
 		assertEval("1 + false;", intVal(1))
+
+		// Null tests
+		assertEval("null + 1;", intVal(1))
+		assertEval("null + '2';", strVal("null2"))
+		assertEval("null + true;", intVal(1))
 
 		// NaN tests
 		assertEval("NaN + 1;", nanVal())
@@ -45,12 +51,14 @@ func TestBinaryOperators(t *testing.T) {
 		// String tests
 		assertEval("'1' + 1;", strVal("11"))
 		assertEval("'1' + 2 + 3;", strVal("123"))
+		assertEval("'1' + null;", strVal("1null"))
 		assertEval("'1' + NaN;", strVal("1NaN"))
 		assertEval("'1' + true;", strVal("1true"))
 
 		// Boolean tests
 		assertEval("true + true;", intVal(2))
 		assertEval("true + false;", intVal(1))
+		assertEval("true + null;", intVal(1))
 		assertEval("true + NaN;", nanVal())
 		assertEval("true + '1';", strVal("true1"))
 	})
@@ -61,26 +69,34 @@ func TestBinaryOperators(t *testing.T) {
 		assertEval("5 - 2 - 1;", intVal(2))
 		assertEval("1 - 2;", intVal(-1))
 		assertEval("3 - '1';", intVal(2))
+		assertEval("1 - null;", intVal(1))
 		assertEval("1 - NaN;", nanVal())
 		assertEval("3 - true;", intVal(2))
 		assertEval("3 - 'a';", nanVal())
 		assertEval("2 - NaN;", nanVal())
 
 		// NaN tests
+		assertEval("null - 1;", intVal(-1))
+		assertEval("null - '1';", intVal(-1))
+
+		// NaN tests
 		assertEval("NaN - 1;", nanVal())
 
 		// String tests
 		assertEval("'a' - 1;", nanVal())
+		assertEval("'a' - null;", nanVal())
 
 		// Boolean tests
 		assertEval("true - true;", intVal(0))
 		assertEval("false - 1;", intVal(-1))
+		assertEval("true - null;", intVal(1))
 	})
 
 	Convey("assignment", t, func() {
 		assertEval("x = 1;", intVal(1))
 		assertEval("x = y = 1;", intVal(1))
 		assertEval("x = y = z = 1;", intVal(1))
+		assertEval("x = null;", nullVal())
 
 		assertEval("x = 1; y = x + 1;", intVal(2))
 
@@ -92,6 +108,7 @@ func TestBinaryOperators(t *testing.T) {
 		assertError("1 = 1;", "Invalid left-hand side in assignment")
 		assertError("'a' = 'a';", "Invalid left-hand side in assignment")
 		assertError("true = true;", "Invalid left-hand side in assignment")
+		assertError("null = null;", "Invalid left-hand side in assignment")
 	})
 
 	Convey("equality", t, func() {
@@ -112,6 +129,14 @@ func TestBinaryOperators(t *testing.T) {
 		assertEval("true == 'true';", boolVal(false))
 		assertEval("true == 1;", boolVal(true))
 		assertEval("true == '1';", boolVal(true))
+
+		// Null tests
+		assertEval("null == null;", boolVal(true))
+		assertEval("null === null;", boolVal(true))
+		assertEval("null == 0;", boolVal(false))
+		assertEval("null == '';", boolVal(false))
+		assertEval("null == 'null';", boolVal(false))
+		assertEval("null == false;", boolVal(false))
 
 		// NaN tests
 		assertEval("NaN == NaN;", boolVal(false))

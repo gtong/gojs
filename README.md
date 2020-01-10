@@ -14,8 +14,8 @@ List of features to implement:
 * ~~Conditionals~~ (just if)
 * ~~Comparisons~~
 * ~~Looping statements (while, for)~~
-* Functions
-* Closures
+* ~~Functions~~
+* ~~Closures~~
 * Javascript objects (and object notation)
 * Exceptions
 * Stacktraces (with line #s)

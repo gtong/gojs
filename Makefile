@@ -1,4 +1,5 @@
 .PHONY: all precommit setup test build run fix gen
+.DEFAULT_GOAL := precommit
 
 setup:
 	go get -u github.com/blynn/nex
